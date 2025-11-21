@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>What's In The Box</title>
+  <meta name="description" content="Inventory management single-page UI: dashboard, transactions, stock monitoring, alerts, and reports." />
+
+  <link rel="icon" type="image/png" href="faviconbox.png">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav aria-label="Primary" class="hidden">
+    <div class="container nav-inner">
+      <div class="brand">What's In The Box</div>
+
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">☰</button>
+
+      <div class="nav-right">
+        <div class="nav-links" role="navigation">
+          <a href="#home" class="active">Home</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#transaction">Transaction</a>
+          <a href="#stock-monitoring">Stock Monitoring</a>
+          <a href="#manage-alerts">Reports</a>
+          <a href="#reports">Manage Alerts</a>
+        </div>
+
+        <button id="logout-btn" class="btn btn-danger" style="display:none;">
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="container section-inner">
+
+      <!-- Spinner decoration -->
+      <div class="home-spinner" aria-hidden="true">
+        <div></div><div></div><div></div>
+        <div></div><div></div><div></div>
+      </div>
+
+      <div class="hero">
+        <!-- Left column -->
+        <div>
+          <h1>Unlock the Mystery: Know Exactly What's in Your Boxes!</h1>
+          <p class="mt-4"></p>
+          <div class="cta mt-6 hidden">
+            <a class="btn btn-primary" href="#dashboard">View Dashboard</a>
+            <a class="btn btn-accent" href="#transaction">New Transaction</a>
+          </div>
+        </div>
+
+        <!-- Right column: sign-up card -->
+        <div id="signup" class="card" aria-labelledby="signup-title">
+          <h2 id="signup-title" class="mb-2">Sign Up</h2>
+          <form id="signup-form">
+            <div class="field">
+              <label for="username">Username</label>
+              <input id="username" name="username" placeholder="e.g. jdoe" required />
+            </div>
+            <div class="field mt-4">
+              <label for="email">Email</label>
+              <input id="email" type="email" name="email" placeholder="you@example.com" required />
+            </div>
+            <div class="field mt-4">
+              <label for="password">Password</label>
+              <input id="password" type="password" name="password" minlength="6" placeholder="••••••••" required />
+            </div>
+            <button class="btn btn-primary mt-6" type="submit">Create account</button>
+            <p id="signup-msg" class="mt-4" role="status" aria-live="polite" hidden>
+              Welcome aboard! Your sign-up was submitted (demo).
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="gated hidden">
+    <div class="container section-inner">
+      <h2>Dashboard</h2>
+      <p class="mt-4">At-a-glance view of your operation.</p>
+      <div class="grid-3 mt-6">
+        <div class="card box">
+          <h3>Stock Overview</h3>
+          <p class="kpi">1,248 items</p>
+          <p class="mt-4">Across 54 SKUs</p>
+        </div>
+        <div class="card box">
+          <h3>Pending Alerts</h3>
+          <p class="kpi">7</p>
+          <p class="mt-4">Reorder and low-stock</p>
+        </div>
+        <div class="card box">
+          <h3>Recent Transactions</h3>
+          <p class="kpi">23</p>
+          <p class="mt-4">Past 24 hours</p>
+        </div>
+      </div>
+      <div class="grid-3 mt-6">
+        <div class="card"><h3>Top Movers</h3><p class="mt-4">SKU-014, SKU-022, SKU-031</p></div>
+        <div class="card"><h3>Vendors Due</h3><p class="mt-4">3 POs awaiting confirmation</p></div>
+        <div class="card"><h3>Backorders</h3><p class="mt-4">5 items</p></div>
+      </div>
+      <div class="center mt-6">
+        <a class="btn btn-primary" href="#reports">View Reports</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSACTION -->
+  <section id="transaction" class="gated hidden">
+    <div class="container section-inner">
+      <h2>Transaction</h2>
+      <div class="card mt-4">
+        <form id="tx-form">
+          <div class="row">
+            <div class="field">
+              <label for="empid">Employee ID</label>
+              <input id="empid" name="empid" placeholder="EMP-001" required />
+            </div>
+            <div class="field">
+              <label for="product">Product Name</label>
+              <input id="product" name="product" placeholder="Product ABC" required />
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="field">
+              <label for="type">Transaction Type</label>
+              <select id="type" name="type" required>
+                <option value="">Select type…</option>
+                <option value="in">In (Stock In)</option>
+                <option value="out">Out (Stock Out)</option>
+                <option value="transfer">Transfer</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="date">Date</label>
+              <input id="date" type="date" name="date" required />
+            </div>
+          </div>
+          <button class="btn btn-accent mt-6" type="submit">Submit</button>
+          <p id="tx-msg" class="mt-4" role="status" aria-live="polite" hidden>Transaction submitted (demo).</p>
+        </form>
+
+        <!-- Transaction list -->
+        <div id="tx-list" class="mt-6"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STOCK MONITORING -->
+  <section id="stock-monitoring" class="gated hidden">
+    <div class="container section-inner">
+      <h2>Stock Monitoring</h2>
+      <p class="mt-4">Sample visual levels with accessible progress bars. Add products below.</p>
+
+      <div class="card mt-6">
+        <h3>Add Product</h3>
+        <form id="add-product-form" class="mt-4">
+          <div class="row">
+            <div class="field">
+              <label for="ap-name">Product Name</label>
+              <input id="ap-name" name="ap-name" placeholder="e.g. SKU-200 Fancy Box" required />
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="field">
+              <label for="ap-stock">In-Stock % (0–100)</label>
+              <input id="ap-stock" name="ap-stock" type="number" min="0" max="100" placeholder="75" required />
+            </div>
+            <div class="field">
+              <label for="ap-reorder">Reorder Pt % (0–100)</label>
+              <input id="ap-reorder" name="ap-reorder" type="number" min="0" max="100" placeholder="30" required />
+            </div>
+          </div>
+          <button class="btn btn-primary mt-6" type="submit">Add to Table</button>
+          <p id="ap-msg" class="mt-4" role="status" aria-live="polite" hidden>Product added.</p>
+        </form>
+      </div>
+
+      <div class="mt-6">
+        <table aria-label="Stock levels">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">In Stock</th>
+              <th scope="col">Reorder Pt</th>
+              <th scope="col">Status</th>
+              <th scope="col">Fill</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="stock-tbody">
+            <!-- rows rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORTS -->
+  <section id="reports" class="gated hidden">
+    <div class="container section-inner">
+      <h2>Reports</h2>
+      <div class="card mt-4">
+        <form id="reports-form">
+          <div class="row">
+            <div class="field">
+              <label for="report-items">Select Items</label>
+              <select id="report-items" name="report-items" required>
+                <option value="">Choose…</option>
+                <option value="topsellers">Top Sellers</option>
+                <option value="lows">Low Stock</option>
+                <option value="recent">Recently Added</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="range">Date Range</label>
+              <select id="range" name="range" required>
+                <option value="7">Last 7 days</option>
+                <option value="30" selected>Last 30 days</option>
+                <option value="90">Last 90 days</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary mt-6" type="submit">Generate List</button>
+          <p id="report-msg" class="mt-4" role="status" aria-live="polite" hidden>Report generated.</p>
+        </form>
+        <div id="report-results" class="mt-6"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANAGE ALERTS -->
+  <section id="manage-alerts" class="gated hidden">
+    <div class="container section-inner">
+      <h2>Manage Alerts</h2>
+
+      <!-- First row -->
+      <div class="grid-3 mt-6">
+        <div class="card">
+          <h3>Filter Reports</h3>
+          <div class="cta mt-4">
+            <button class="btn" data-filter="low" style="background:var(--chip); color:var(--fg)">Low Stock</button>
+            <button class="btn" data-filter="out" style="background:var(--chip); color:var(--fg)">Out of Stock</button>
+            <button class="btn" data-filter="expiring" style="background:var(--chip); color:var(--fg)">Expiring Soon</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Inventory Report</h3>
+          <div class="cta mt-4">
+            <button class="btn btn-primary" data-action="export-csv">Export CSV</button>
+            <button class="btn btn-accent" data-action="download-pdf">Download PDF</button>
+            <button class="btn" data-action="email" style="background:var(--chip); color:var(--fg)">Email</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Sales Report</h3>
+          <div class="cta mt-4">
+            <button class="btn" data-sales="today" style="background:var(--chip); color:var(--fg)">Today</button>
+            <button class="btn" data-sales="7" style="background:var(--chip); color:var(--fg)">7 Days</button>
+            <button class="btn" data-sales="30" style="background:var(--chip); color:var(--fg)">30 Days</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second row -->
+      <div class="grid-3 mt-6">
+        <div class="card">
+          <h3>Transaction Report</h3>
+          <div class="cta mt-4">
+            <button class="btn" data-tx="in" style="background:var(--chip); color:var(--fg)">Stock In</button>
+            <button class="btn" data-tx="out" style="background:var(--chip); color:var(--fg)">Stock Out</button>
+            <button class="btn" data-tx="transfer" style="background:var(--chip); color:var(--fg)">Transfer</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Alerts Report</h3>
+          <div class="cta mt-4">
+            <button class="btn" data-alert="reorder" style="background:var(--chip); color:var(--fg)">Reorder</button>
+            <button class="btn" data-alert="supplier" style="background:var(--chip); color:var(--fg)">Delay</button>
+            <button class="btn" data-alert="threshold" style="background:var(--chip); color:var(--fg)">Breached</button>
+          </div>
+        </div>
+        <div class="card center">
+          <h3>Submit Your Report</h3>
+          <form id="alerts-form" class="mt-4">
+            <button class="btn btn-primary btn-lg" type="submit">Submit Report</button>
+            <p id="alerts-msg" class="mt-4" role="status" aria-live="polite" hidden>Generated result.</p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Generated Report -->
+      <div class="grid-3 mt-6">
+        <div class="card grid-span-3" id="generated-card">
+          <h3>Generated Report</h3>
+          <div class="generated-inner">
+            <div id="alerts-output"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="center section-inner gated hidden" style="padding-top:0">
+    <p>© <span id="year"></span> What's In The Box</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
